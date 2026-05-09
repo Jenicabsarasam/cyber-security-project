@@ -1,0 +1,26 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Create Account</title>
+    <link rel="stylesheet" href="/static/style.css">
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+</head>
+
+<body>
+<div class="container">
+    <h2>📝 Get Started</h2>
+    <p>Create your secure account in seconds</p>
+
+    <input id="username" placeholder="Username" autocomplete="username">
+    <input id="password" type="password" placeholder="Password" autocomplete="new-password">
+
+    <small>✓ Password must be at least 6 characters<br>✓ Must contain at least one number</small>
+
+    <button onclick="signup()">Create Account →</button>
+
+    <p id="error" class="error"></p>
+</div>
+
+<script src="/static/script.js"></script>
+</body>
+</html>
