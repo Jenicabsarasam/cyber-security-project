@@ -79,7 +79,6 @@ def verify_csrf():
     if not token or token != session.get("csrf_token"):
         return False
     return True
-@app.route('/signup', methods=['POST'])
 def is_strong_password(password):
     return (
         len(password) >= 8 and
