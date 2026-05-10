@@ -1,0 +1,46 @@
+Here’s a clean message you can send to your friends 👇
+
+---
+
+Clone the project using:
+
+```
+git clone https://github.com/Jenicabsarasam/cyber-security-project
+cd cyber-security-project
+```
+
+Make sure you have Python installed, then install all required dependencies:
+
+```
+pip install -r requirements.txt
+```
+
+Next, create a file named `.env` in the project root (same folder as `app.py`) and add the following:
+
+```
+SECRET_KEY=mysecret123
+FERNET_KEY=your_generated_key_here
+```
+
+To generate the `FERNET_KEY`, open Python and run:
+
+```
+from cryptography.fernet import Fernet
+print(Fernet.generate_key().decode())
+```
+
+Copy the output and paste it as the value for `FERNET_KEY` in your `.env` file.
+
+After that, start the application:
+
+```
+python app.py
+```
+
+Once the server is running, open your browser and go to:
+
+```
+http://127.0.0.1:5000
+```
+
+You can now sign up, log in, and use the Secure Notes Vault app.

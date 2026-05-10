@@ -87,8 +87,7 @@ async function signup() {
         const data = await res.json();
 
         if (data.message) {
-            await fetchCSRFToken();
-            showSuccess('✅ Account created successfully! Redirecting to login...');
+            showSuccess('✅ Login successful! Redirecting to dashboard...');
             setTimeout(() => {
                 location.href = "/";
             }, 1500);
@@ -118,14 +117,19 @@ async function login() {
     try {
         const res = await fetch('/login', {
             method: 'POST',
-            headers: { 'Content-Type': 'application/json' },
+            headers: { 
+    'Content-Type': 'application/json'},
             body: JSON.stringify({ username, password })
         });
 
         const data = await res.json();
 
         if (data.message) {
-            showSuccess('✅ Login successful! Redirecting to dashboard...');
+
+    csrfToken = data.csrf_token;   // 🔥 ADD THIS
+    console.log("CSRF Token:", csrfToken);
+
+    showSuccess('✅ Login successful! Redirecting to dashboard...');
             setTimeout(() => {
                 location.href = "/dashboard";
             }, 800);
@@ -288,7 +292,10 @@ async function edit(id, oldText) {
         try {
             const res = await fetch('/edit/' + id, {
                 method: 'PUT',
-                headers: { 'Content-Type': 'application/json' },
+                headers: { 
+    'Content-Type': 'application/json',
+    'X-CSRF-Token': csrfToken
+},
                 body: JSON.stringify({ content: newText.trim() })
             });
             
@@ -346,8 +353,11 @@ async function del(id) {
         deleteButton.disabled = true;
         
         try {
-            const res = await fetch('/delete/' + id, { method: 'DELETE' });
-            const data = await res.json();
+           const res = await fetch('/delete/' + id, { 
+    method: 'DELETE',
+    headers: { 'X-CSRF-Token': csrfToken }
+});
+const data = await res.json();
             
             if (data.message) {
                 showSuccess('✅ Note deleted successfully');
@@ -412,6 +422,9 @@ async function logout(event) {
 
 // Optional: Add enter key support for login/signup
 document.addEventListener('DOMContentLoaded', () => {
+    if (window.location.pathname === '/dashboard') {
+    fetchCSRFToken();   // 🔥 VERY IMPORTANT
+}
     const passwordInput = document.getElementById('password');
     if (passwordInput) {
         passwordInput.addEventListener('keypress', (e) => {

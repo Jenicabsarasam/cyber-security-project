@@ -167,7 +167,10 @@ def login():
     session.permanent = True
     session['user_id'] = user[0]
 
-    return jsonify({"message": "Logged in"})
+    return jsonify({
+    "message": "Logged in",
+    "csrf_token": session.get("csrf_token")
+})
 @app.route('/logout', methods=['GET', 'POST'])
 def logout():
     session.clear()
